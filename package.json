@@ -27,6 +27,7 @@
     "@types/jsonwebtoken": "^8.3.2",
     "@types/passport": "^1.0.0",
     "@types/passport-jwt": "^3.0.1",
+    "@types/passport-local": "^1.0.33",
     "async": "^2.6.0",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.1",
@@ -46,6 +47,7 @@
     "mongoose": "^5.4.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "winston": "^2.4.0"

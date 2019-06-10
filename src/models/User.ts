@@ -3,8 +3,11 @@ import mongoose from "mongoose";
 
 export type UserModel = mongoose.Document & {
   email: string,
-  password: string
+  password: string,
+  comparePassword: comparePasswordFunction,
 };
+
+type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void;
 
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
@@ -27,4 +30,12 @@ userSchema.pre("save", function save(next) {
   });
 });
 
-export const User = mongoose.model<UserModel>("User", userSchema);
+const comparePassword: comparePasswordFunction = function (candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, (err: mongoose.Error, isMatch: boolean) => {
+    cb(err, isMatch);
+  });
+};
+
+userSchema.methods.comparePassword = comparePassword;
+
+export const User = mongoose.model<UserModel>('User', userSchema);

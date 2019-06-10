@@ -7,10 +7,10 @@ import passport from 'passport';
 const signIn = (req: Request, res: Response, next: NextFunction) => {
   try {
     validationResult(req).throw();
-      passport.authenticate('jwt', { session: false }, (err, user, info) => {
+      passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err || !user) {
             return res.status(400).json({
-                error: 'Something is not right',
+                error: info || 'Something is not right',
                 user,
                 token: null
             });
