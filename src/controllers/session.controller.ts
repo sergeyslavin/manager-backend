@@ -4,6 +4,15 @@ import { User, UserModel } from '..//models/User';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 
+const validateUser = (req: Request, res: Response, next: NextFunction) => {
+  try {
+   const { user } = req;
+   return res.json({ user, error: null });
+  } catch(err) {
+    res.status(422).json({ error: err, user: null });
+  }
+};
+
 const signIn = (req: Request, res: Response, next: NextFunction) => {
   try {
     validationResult(req).throw();
@@ -57,5 +66,6 @@ const validationRules = [
 
 router.post('/sign_in', validationRules, signIn);
 router.post('/sign_up', validationRules, signUp);
+router.post('/validate_user', passport.authenticate('jwt', { session: false }), validateUser);
 
 export default router;
